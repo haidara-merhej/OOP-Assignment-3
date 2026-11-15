@@ -1,47 +1,94 @@
 namespace RefactoringLab;
 
-public class Notification
+public class EmailNotification : INotification
 {
-    public virtual void Send(string to, string message) =>
-        Console.WriteLine($"notify {to}: {message}");
+    private readonly UrgentBehavior? _urgent;
+    private readonly ScheduledBehavior? _scheduled;
+
+    public EmailNotification(UrgentBehavior? urgent = null, ScheduledBehavior? scheduled = null)
+    {
+        _urgent = urgent;
+        _scheduled = scheduled;
+    }
+
+    public void Send(string to, string message)
+    {
+        if(_urgent != null)
+            message = _urgent.MarkAsUrgent(message);
+
+        if(_scheduled != null)
+            Console.WriteLine($"[email scheduled {_scheduled.SendAt:g}] {to}: {message}");
+        else
+            Console.WriteLine($"[email] {to}: {message}");
+    }
 }
 
-public class EmailNotification : Notification
+public class SmsNotification : INotification
 {
-    public override void Send(string to, string message) =>
-        Console.WriteLine($"[email] {to}: {message}");
+ private readonly UrgentBehavior? _urgent;
+    private readonly ScheduledBehavior? _scheduled;
+
+    public SmsNotification(UrgentBehavior? urgent = null, ScheduledBehavior? scheduled = null)
+    {
+        _urgent = urgent;
+        _scheduled = scheduled;
+    }
+
+    public void Send(string to, string message)
+    {
+        if(_urgent != null)
+            message = _urgent.MarkAsUrgent(message);
+
+        if(_scheduled != null)
+            Console.WriteLine($"[sms scheduled {_scheduled.SendAt:g}] {to}: {message}");
+        else
+            Console.WriteLine($"[sms] {to}: {message}");
+    }
 }
 
-public class SmsNotification : Notification
+public class WhatsAppNotification : INotification
 {
-    public override void Send(string to, string message) =>
-        Console.WriteLine($"[sms] {to}: {message}");
+ private readonly UrgentBehavior? _urgent;
+    private readonly ScheduledBehavior? _scheduled;
+
+    public WhatsAppNotification(UrgentBehavior? urgent = null, ScheduledBehavior? scheduled = null)
+    {
+        _urgent = urgent;
+        _scheduled = scheduled;
+    }
+
+    public void Send(string to, string message)
+    {
+        if(_urgent != null)
+            message = _urgent.MarkAsUrgent(message);
+
+        if(_scheduled != null)
+            Console.WriteLine($"[whatsApp scheduled {_scheduled.SendAt:g}] {to}: {message}");
+        else
+            Console.WriteLine($"[whatsApp] {to}: {message}");
+    }
 }
 
-public class UrgentEmailNotification : EmailNotification
+
+public interface INotification
 {
-    public override void Send(string to, string message) =>
-        base.Send(to, $"[URGENT] {message}");
+    void Send(string to, string message);
 }
 
-public class UrgentSmsNotification : SmsNotification
+public class UrgentBehavior
 {
-    public override void Send(string to, string message) =>
-        base.Send(to, $"[URGENT] {message}");
+    public string MarkAsUrgent(string message)
+    {
+        return $"[URGENT] {message}";
+    }
 }
 
-public class UrgentScheduledEmailNotification : UrgentEmailNotification
+public class ScheduledBehavior
 {
-    public DateTime SendAt { get; set; }
+    public DateTime SendAt { get; }
 
-    public override void Send(string to, string message) =>
-        Console.WriteLine($"[email scheduled {SendAt:g}] {to}: [URGENT] {message}");
-}
-
-public class UrgentScheduledSmsNotification : UrgentSmsNotification
-{
-    public DateTime SendAt { get; set; }
-
-    public override void Send(string to, string message) =>
-        Console.WriteLine($"[sms scheduled {SendAt:g}] {to}: [URGENT] {message}");
+    public ScheduledBehavior(DateTime sendAt)
+    {
+        SendAt = sendAt;
+    }
 }
