@@ -1,6 +1,6 @@
 namespace Generics;
 
-public class Store<T> where T : class, IHasId
+public class Store<T> where T : IHasId
 {
      private readonly Dictionary<int, T> _entities = [];
 
@@ -19,7 +19,7 @@ public class Store<T> where T : class, IHasId
         if(_entities.TryGetValue(id, out T? entity))
                 return entity;
 
-        return null;
+        return default(T);
     }
 
     public void Remove(int id)
