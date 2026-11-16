@@ -2,31 +2,28 @@ namespace Generics;
 
 public class Store<T> where T : class, IHasId
 {
-     private readonly List<T> _entities = [];
+     private readonly Dictionary<int, T> _entities = [];
 
     public void Add(T entity)
     {
-        _entities.Add(entity);
+        if(_entities.ContainsKey(entity.Id))
+            throw new InvalidOperationException($"An entity with id = {entity.Id} already exists");
+
+        _entities[entity.Id] = entity;
     }
 
-    public IReadOnlyList<T> GetAll() => _entities;
+    public IReadOnlyCollection<T> GetAll() => _entities.Values;
 
     public T? GetById(int id)
     {
-        foreach(var entity in _entities)
-        {
-            if(entity.Id == id)
+        if(_entities.TryGetValue(id, out T? entity))
                 return entity;
-        }
 
         return null;
     }
 
     public void Remove(int id)
     {
-        T? entity = GetById(id);
-
-        if(entity is not null)
-            _entities.Remove(entity);
+        _entities.Remove(id);
     }
 }

@@ -1,6 +1,6 @@
 # Generics — One Store for Every Type
 
-## What is the same between StudentStore and CourseStore, and what is different?
+## Step 2 - What is the same between StudentStore and CourseStore, and what is different?
 
 **Same:**
 
