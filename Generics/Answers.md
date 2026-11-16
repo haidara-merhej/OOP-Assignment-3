@@ -28,3 +28,7 @@ Since T can represent any data type, the compiler cannot guarantee that accessin
 Store<T> requires T to implement the IHasId interface.
 
 The string type does not implement IHasId, so it does not satisfy the generic constraint.
+
+## Common name for the class in Steps 4 and 5
+
+The class is commonly known as a Generic Repository.
