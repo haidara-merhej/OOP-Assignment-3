@@ -22,3 +22,9 @@ Each type has its own properties.
 The compiler does not know whether the generic type T has an Id property or not.
 
 Since T can represent any data type, the compiler cannot guarantee that accessing T.Id is valid.
+
+## Step 7 — Why does Store<string> not compile?
+
+Store<T> requires T to implement the IHasId interface.
+
+The string type does not implement IHasId, so it does not satisfy the generic constraint.

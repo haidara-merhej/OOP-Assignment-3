@@ -3,11 +3,13 @@ namespace Generics;
 public class Course : IHasId
 {
     public int Id { get; }
-    public string Name { get; }
+    public string Titel { get; }
+    public decimal Price { get; }
 
-    public Course(int id, string name)
+    public Course(int id, string title, decimal price)
     {
         Id = id;
-        Name = name;
+        Titel = title;
+        Price = price;
     }
 }
