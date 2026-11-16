@@ -1,0 +1,13 @@
+namespace Generics;
+
+public class Course
+{
+    public int Id { get; }
+    public string Name { get; }
+
+    public Course(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+}
