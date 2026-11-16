@@ -1,6 +1,6 @@
 ﻿using Generics;
 
-StudentStore studentStore = new StudentStore();
+Store<Student> studentStore = new Store<Student>();
 studentStore.Add(new Student(1, "Ahmed"));
 studentStore.Add(new Student(2, "Ali"));
 
@@ -20,7 +20,7 @@ else
 
 Console.WriteLine();
 
-CourseStore courseStore = new CourseStore();
+Store<Course> courseStore = new Store<Course>();
 courseStore.Add(new Course(1, "OOP"));
 courseStore.Add(new Course(2, "C# Advanced"));
 
